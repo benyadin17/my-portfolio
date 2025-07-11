@@ -70,7 +70,7 @@ export default function Home() {
             Explore my works
           </Button>
 
-          {/* Tombol Scroll ke Contact */}
+          {/* Scroll to Contact */}
           <Button
             href="#contact"
             variant="tertiary"
