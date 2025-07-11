@@ -16,10 +16,8 @@ export default function Footer() {
       }}
     >
       <Row
-        justify="center"
         gap="m"
-        marginBottom="m"
-        style={{ justifyContent: "center" }}
+        style={{ justifyContent: "center", marginBottom: 16 }}
       >
         {/* Twitter */}
         <Link
@@ -127,12 +125,11 @@ export default function Footer() {
       </Row>
 
       <Row
-        justify="center"
         gap="s"
         wrap
         style={{ justifyContent: "center", marginTop: 16 }}
       >
-        <Text size="sm">© 2025 Besignz. All rights reserved.</Text>
+        <Text size="m">© 2025 Besignz. All rights reserved.</Text>
         <Link
           href="/privacy-policy"
           style={{
