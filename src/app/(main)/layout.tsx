@@ -1,22 +1,32 @@
-import '@once-ui-system/core/css/styles.css';
-import '@once-ui-system/core/css/tokens.css';
+import "@once-ui-system/core/css/styles.css";
+import "@once-ui-system/core/css/tokens.css";
 
 import classNames from "classnames";
 import { Column } from "@once-ui-system/core";
 import { fonts } from "../resources/once-ui.config";
-import { ThemeProvider } from "@once-ui-system/core";
-import { DataThemeProvider } from "@once-ui-system/core";
-import { ToastProvider } from "@once-ui-system/core";
-import { IconProvider } from "@once-ui-system/core";
+import {
+  ThemeProvider,
+  DataThemeProvider,
+  ToastProvider,
+  IconProvider,
+} from "@once-ui-system/core";
+import type { Metadata } from "next";
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+export const metadata: Metadata = {
+  title: "Besignz Portfolio",
+  description: "Technology & Creative Portfolio by Beny",
+};
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <Column
-      as="html"
+    <html
       lang="en"
       suppressHydrationWarning
       className={classNames(
@@ -69,17 +79,27 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           }}
         />
       </head>
-      <ThemeProvider>
-        <DataThemeProvider>
-          <ToastProvider>
-            <IconProvider>
-              <Column background="page" as="body" fillWidth margin="0" padding="0" style={{ minHeight: "100vh" }}>
-                {children}
-              </Column>
-            </IconProvider>
-          </ToastProvider>
-        </DataThemeProvider>
-      </ThemeProvider>
-    </Column>
+      <body>
+        <ThemeProvider>
+          <DataThemeProvider>
+            <ToastProvider>
+              <IconProvider>
+                <Column
+                  fillWidth
+                  background="page"
+                  margin="0"
+                  padding="0"
+                  style={{ minHeight: "90vh" }}
+                >
+                  <Navbar />
+                  {children}
+                  <Footer />
+                </Column>
+              </IconProvider>
+            </ToastProvider>
+          </DataThemeProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
