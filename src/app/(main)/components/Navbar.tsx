@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Row, Column, Button, Logo, Icon } from "@once-ui-system/core";
+import { Row, Column, Button, Logo } from "@once-ui-system/core";
+import { HiMenu, HiX } from "react-icons/hi";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,8 +15,7 @@ export default function Navbar() {
     { label: "Works", href: "/works/1" },
     { label: "Blog", href: "/blog" },
     { label: "About", href: "/not-found" },
-    { label: "Contact", href: "/#contact" }
-
+    { label: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -27,19 +27,17 @@ export default function Navbar() {
         backgroundColor: "rgba(255, 255, 255, 0.25)",
         border: "1px solid rgba(255, 255, 255, 0.3)",
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-        borderRadius: "16px", // Rounded edges
+        borderRadius: "16px",
         color: "black",
         position: "sticky",
         top: 20,
         zIndex: 1000,
         paddingTop: 5,
         userSelect: "none",
-        margin: "0 1rem", // opsional: beri margin supaya tidak nempel ke tepi layar
+        margin: "0 1rem",
       }}
-
     >
       <Row align="center" justify="space-between" style={{ height: 40 }}>
-        {/* Hamburger menu button for mobile */}
         <Button
           variant="ghost"
           style={{
@@ -52,22 +50,18 @@ export default function Navbar() {
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           id="hamburger-button"
         >
-          <Icon
-            name={menuOpen ? "HiX" : "HiMenu"}
-            size="l"
-            style={{ pointerEvents: "none" }}
-          />
+          {menuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
         </Button>
 
-        {/* Logo kiri */}
         <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Row align="center" gap="s" style={{ cursor: "pointer" }}>
             <Logo size="l" />
-            <span style={{ fontWeight: "bold", fontSize: 18, paddingTop:8}}>Besignz |</span>
+            <span style={{ fontWeight: "bold", fontSize: 18, paddingTop: 8 }}>
+              Besignz |
+            </span>
           </Row>
         </Link>
 
-        {/* Menu tengah desktop */}
         <Row
           gap="m"
           style={{
@@ -100,7 +94,6 @@ export default function Navbar() {
           })}
         </Row>
 
-        {/* Avatar / Action kanan (opsional) */}
         <Button
           variant="ghost"
           style={{ borderRadius: "50%", padding: 0, width: 40, height: 40 }}
@@ -108,7 +101,6 @@ export default function Navbar() {
         />
       </Row>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <Column
           style={{
@@ -141,7 +133,6 @@ export default function Navbar() {
         </Column>
       )}
 
-      {/* CSS Responsif */}
       <style jsx>{`
         #hamburger-button {
           display: none;
