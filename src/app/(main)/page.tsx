@@ -73,7 +73,7 @@ export default function Home() {
           {/* Tombol Scroll ke Contact */}
           <Button
             href="#contact"
-            variant="ghost"
+            variant="tertiary"
             size="s"
             style={{ marginTop: 32 }}
           >
@@ -97,18 +97,16 @@ export default function Home() {
         <Column maxWidth="s" align="start" gap="m">
           <Heading variant="display-strong-s">Email Me</Heading>
 
-          <Input label="Name" placeholder="Your name" required />
+          <Input label="Name" placeholder="Your name" required id={""} />
           <Input
             label="Email"
             type="email"
             placeholder="you@example.com"
-            required
-          />
+            required id={""}          />
           <Textarea
             label="Message"
             placeholder="Type your message..."
-            required
-          />
+            required id={""}          />
 
           <Button type="submit" style={{ marginTop: 12 }}>
             Send Message

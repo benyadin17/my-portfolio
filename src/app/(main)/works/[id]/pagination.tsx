@@ -3,6 +3,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button, Row } from "@once-ui-system/core";
+import { JSX } from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -19,9 +20,9 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
   };
 
   return (
-    <Row gap="s" wrap justify="center" marginTop="xl" align="center">
+    <Row gap="s" wrap marginTop="xl" align="center">
       <Button
-        variant="outline"
+        variant="primary"
         size="s"
         disabled={currentPage === 1}
         onClick={() => goToPage(currentPage - 1)}
@@ -36,7 +37,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         return (
           <Button
             key={pageNum}
-            variant={isActive ? "solid" : "ghost"}
+            variant={isActive ? "primary" : "tertiary"}
             size="s"
             style={{
               minWidth: 40,
@@ -53,7 +54,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       })}
 
       <Button
-        variant="outline"
+        variant="tertiary"
         size="s"
         disabled={currentPage === totalPages}
         onClick={() => goToPage(currentPage + 1)}
