@@ -8,8 +8,9 @@ const works = [
   { id: "3", title: "Brand Identity Design", description: "Designed logo, typography, and guidelines for a new brand." },
 ];
 
-export default function WorkDetail({ params }: { params: { id: string } }) {
-  const currentIndex = works.findIndex((item) => item.id === params.id);
+export default async function WorkDetail({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const currentIndex = works.findIndex(item => item.id === resolvedParams.id);
   if (currentIndex === -1) {
     return notFound();
   }
