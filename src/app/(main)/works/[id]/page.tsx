@@ -1,4 +1,3 @@
-// src/app/(main)/works/[id]/page.tsx
 import { Heading, Text, Column, Badge } from "@once-ui-system/core";
 import { notFound } from "next/navigation";
 import Pagination from "./pagination";
@@ -9,31 +8,22 @@ const works = [
   { id: "3", title: "Brand Identity Design", description: "Designed logo, typography, and guidelines for a new brand." },
 ];
 
-interface Props {
-  params: { id: string };
-}
-
-export default function WorkDetail({ params }: Props): JSX.Element {
+export default function WorkDetail({ params }: { params: { id: string } }) {
   const currentIndex = works.findIndex((item) => item.id === params.id);
-  const work = works[currentIndex];
-
-  if (!work) {
+  if (currentIndex === -1) {
     return notFound();
   }
-
+  const work = works[currentIndex];
   const totalPages = works.length;
   const currentPage = currentIndex + 1;
 
   return (
     <Column gap="l" padding="xl" style={{ minHeight: "80vh" }}>
       <Badge textVariant="display-strong-s">My Works </Badge>
-
       <Heading variant="display-strong-l">{work.title}</Heading>
-
       <Text variant="heading-default-l" onBackground="neutral-medium">
         {work.description}
       </Text>
-
       <Pagination currentPage={currentPage} totalPages={totalPages} />
     </Column>
   );
