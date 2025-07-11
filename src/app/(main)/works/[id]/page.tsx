@@ -1,8 +1,7 @@
-"use client";
+// Remove "use client"
 
-import { useState } from "react";
 import { Heading, Text, Column, Badge, Button, Row } from "@once-ui-system/core";
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 
 // Dummy data
 const works = [
@@ -16,7 +15,6 @@ interface Props {
 }
 
 export default function WorkDetail({ params }: Props) {
-  const router = useRouter();
   const currentIndex = works.findIndex((item) => item.id === params.id);
   const work = works[currentIndex];
 
@@ -26,12 +24,6 @@ export default function WorkDetail({ params }: Props) {
 
   const totalPages = works.length;
   const currentPage = currentIndex + 1;
-
-  const goToPage = (pageNum: number) => {
-    if (pageNum >= 1 && pageNum <= totalPages) {
-      router.push(`/works/${pageNum}`);
-    }
-  };
 
   return (
     <Column gap="l" padding="xl" style={{ minHeight: "80vh" }}>
@@ -43,50 +35,73 @@ export default function WorkDetail({ params }: Props) {
         {work.description}
       </Text>
 
-      {/* Pagination */}
-      <Row gap="s" wrap justify="center" marginTop="xl" align="center">
-        {/* Previous */}
-        <Button
-          variant="outline"
-          size="s"
-          disabled={currentIndex === 0}
-          onClick={() => goToPage(currentPage - 1)}
-        >
-          Previous
-        </Button>
-
-        {/* Numbered buttons */}
-        {works.map((w, i) => {
-          const isActive = w.id === params.id;
-          return (
-            <Button
-              key={w.id}
-              variant={isActive ? "solid" : "ghost"}
-              size="s"
-              style={{
-                minWidth: 40,
-                color: isActive ? "white" : "black",
-                backgroundColor: isActive ? "black" : "transparent",
-                fontWeight: isActive ? "700" : "500",
-                borderColor: isActive ? "black" : undefined,
-              }}
-              onClick={() => goToPage(Number(w.id))}
-            >
-              {i + 1}
-            </Button>
-          );
-        })}
-
-        {/* Next */}
-        <Button
-          variant="outline"
-          size="s"
-          disabled={currentIndex === totalPages - 1}
-          onClick={() => goToPage(currentPage + 1)}
-        >
-          Next
-        </Button>
-      </Row>
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </Column>
+  );
+}
+
+// Separate client component for Pagination buttons with router
+"use client";
+
+import { useRouter } from "next/navigation";
+import { Button, Row } from "@once-ui-system/core";
+
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+}
+
+function Pagination({ currentPage, totalPages }: PaginationProps) {
+  const router = useRouter();
+
+  const goToPage = (pageNum: number) => {
+    if (pageNum >= 1 && pageNum <= totalPages) {
+      router.push(`/works/${pageNum}`);
+    }
+  };
+
+  return (
+    <Row gap="s" wrap justify="center" marginTop="xl" align="center">
+      <Button
+        variant="outline"
+        size="s"
+        disabled={currentPage === 1}
+        onClick={() => goToPage(currentPage - 1)}
+      >
+        Previous
+      </Button>
+
+      {[...Array(totalPages)].map((_, i) => {
+        const pageNum = i + 1;
+        const isActive = pageNum === currentPage;
+
+        return (
+          <Button
+            key={pageNum}
+            variant={isActive ? "solid" : "ghost"}
+            size="s"
+            style={{
+              minWidth: 40,
+              color: isActive ? "white" : "black",
+              backgroundColor: isActive ? "black" : "transparent",
+              fontWeight: isActive ? "700" : "500",
+              borderColor: isActive ? "black" : undefined,
+            }}
+            onClick={() => goToPage(pageNum)}
+          >
+            {pageNum}
+          </Button>
+        );
+      })}
+
+      <Button
+        variant="outline"
+        size="s"
+        disabled={currentPage === totalPages}
+        onClick={() => goToPage(currentPage + 1)}
+      >
+        Next
+      </Button>
+    </Row>
   );
 }
