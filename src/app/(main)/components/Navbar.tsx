@@ -42,7 +42,7 @@ export default function Navbar() {
         style={{ height: 40, justifyContent: "space-between", display: "flex" }}
       >
         <Button
-          variant="ghost"
+          variant="tertiary"
           style={{
             display: "none",
             color: "black",
@@ -98,11 +98,11 @@ export default function Navbar() {
         </Row>
 
         <Button
-          variant="ghost"
+          variant="tertiary"
           style={{ borderRadius: "50%", padding: 0, width: 40, height: 40 }}
           aria-label="User menu"
         />
-      </Row>
+      </Row>  
 
       {menuOpen && (
         <Column
