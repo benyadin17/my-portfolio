@@ -57,7 +57,7 @@ export default function Home() {
             wrap="balance"
             marginBottom="16"
           >
-            I'am a Technology Enthusiast
+            I&apos;am a Technology Enthusiast
           </Text>
 
           <Button
