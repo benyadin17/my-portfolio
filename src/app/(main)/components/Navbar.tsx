@@ -37,7 +37,10 @@ export default function Navbar() {
         margin: "0 1rem",
       }}
     >
-      <Row align="center" justify="space-between" style={{ height: 40 }}>
+      <Row
+        align="center"
+        style={{ height: 40, justifyContent: "space-between", display: "flex" }}
+      >
         <Button
           variant="ghost"
           style={{
