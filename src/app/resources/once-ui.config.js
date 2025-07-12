@@ -1,31 +1,14 @@
 // src/fonts.ts
-import localFont from 'next/font/local';
+import { Inter, Fira_Code } from 'next/font/google';
 
-export const geistSans = localFont({
-  src: [
-    {
-      path: '../public/fonts/geist/Geist-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/geist/Geist-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
+export const geistSans = Inter({
+  subsets: ['latin'],
   variable: '--font-primary',
   display: 'swap',
 });
 
-export const geistMono = localFont({
-  src: [
-    {
-      path: '../public/fonts/geist/GeistMono-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
+export const geistMono = Fira_Code({
+  subsets: ['latin'],
   variable: '--font-code',
   display: 'swap',
 });
