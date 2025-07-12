@@ -26,9 +26,11 @@ const code = Fira_Code({
   display: "swap",
 });
 
+
 export const fonts = {
   primary: { variable: '--font-heading' },
   secondary: { variable: '--font-body' },
   tertiary: { variable: '--font-label' },
   code: { variable: '--font-code' },
 };
+
