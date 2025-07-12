@@ -4,6 +4,7 @@ import "@once-ui-system/core/css/tokens.css";
 import classNames from "classnames";
 import { Column } from "@once-ui-system/core";
 import { fonts } from "../resources/once-ui.config";
+import React from "react";
 import {
   ThemeProvider,
   DataThemeProvider,
