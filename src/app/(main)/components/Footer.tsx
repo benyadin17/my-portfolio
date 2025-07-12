@@ -21,7 +21,7 @@ export default function Footer() {
       >
         {/* Twitter */}
         <Link
-          href="https://twitter.com/yourhandle"
+          href="https://twitter.com/besignz"
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: "none" }}
@@ -73,7 +73,7 @@ export default function Footer() {
 
         {/* LinkedIn */}
         <Link
-          href="https://linkedin.com/in/yourhandle"
+          href="https://linkedin.com/in/beny-adi-nugraha-8879a11a3"
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: "none" }}
