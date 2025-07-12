@@ -99,7 +99,7 @@ export default function Footer() {
 
         {/* GitHub */}
         <Link
-          href="https://github.com/yourhandle"
+          href="https://github.com/benyadin17"
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: "none" }}
