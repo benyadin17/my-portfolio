@@ -1,32 +1,31 @@
-import { Geist } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+// src/fonts.ts
+import localFont from 'next/font/local';
 
-const heading = Geist({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap",
+export const geistSans = localFont({
+  src: [
+    {
+      path: '../public/fonts/geist/Geist-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/geist/Geist-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-primary',
+  display: 'swap',
 });
 
-const body = Geist({
-  variable: "--font-body",
-  subsets: ["latin"],
-  display: "swap",
+export const geistMono = localFont({
+  src: [
+    {
+      path: '../public/fonts/geist/GeistMono-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-code',
+  display: 'swap',
 });
-
-const label = Geist({
-  variable: "--font-label",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const code = Geist_Mono({
-  variable: "--font-code",
-  subsets: ["latin"],
-  display: "swap",
-});
-export const fonts = {
-  primary: { variable: 'font-primary' },
-  secondary: { variable: 'font-secondary' },
-  tertiary: { variable: 'font-tertiary' },
-  code: { variable: 'font-code' },
-};
