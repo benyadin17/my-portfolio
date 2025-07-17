@@ -6,6 +6,12 @@ import { usePathname } from "next/navigation";
 import { Row, Column, Button, Logo } from "@once-ui-system/core";
 import { HiMenu, HiX } from "react-icons/hi";
 
+const works = [
+  { id: "1", title: "Redesign Company Website" },
+  { id: "2", title: "Mobile App Development" },
+  { id: "3", title: "Brand Identity Design" },
+];
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -102,7 +108,7 @@ export default function Navbar() {
           style={{ borderRadius: "50%", padding: 0, width: 40, height: 40 }}
           aria-label="User menu"
         />
-      </Row>  
+      </Row>
 
       {menuOpen && (
         <Column

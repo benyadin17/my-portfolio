@@ -1,31 +1,126 @@
-import { Heading, Text, Column, Badge } from "@once-ui-system/core";
-import { notFound } from "next/navigation";
-import Pagination from "./pagination";
+"use client";
 
-const works = [
-  { id: "1", title: "Redesign Company Website", description: "A complete UI/UX overhaul using Figma & Tailwind." },
-  { id: "2", title: "Mobile App Development", description: "Created a cross-platform app using Flutter for a startup." },
-  { id: "3", title: "Brand Identity Design", description: "Designed logo, typography, and guidelines for a new brand." },
-];
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Column, Heading, Text, Input, Button, Row } from "@once-ui-system/core";
 
-export default async function WorkDetail({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params;
-  const currentIndex = works.findIndex(item => item.id === resolvedParams.id);
-  if (currentIndex === -1) {
-    return notFound();
+type Work = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export default function WorksPage() {
+  const [works, setWorks] = useState<Work[]>([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [editId, setEditId] = useState<string | null>(null);
+
+  async function fetchWorks() {
+    const res = await fetch("/api/works");
+    const data = await res.json();
+    setWorks(data);
   }
-  const work = works[currentIndex];
-  const totalPages = works.length;
-  const currentPage = currentIndex + 1;
+
+  useEffect(() => {
+    fetchWorks();
+  }, []);
+
+  async function handleAdd() {
+    if (!title || !description) return alert("Fill all fields");
+    const res = await fetch("/api/works", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, description }),
+    });
+    if (res.ok) {
+      setTitle("");
+      setDescription("");
+      fetchWorks();
+    }
+  }
+
+  async function handleUpdate() {
+    if (!editId) return;
+    const res = await fetch(`/api/works/${editId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, description }),
+    });
+    if (res.ok) {
+      setTitle("");
+      setDescription("");
+      setEditId(null);
+      fetchWorks();
+    }
+  }
+
+  async function handleDelete(id: string) {
+    const confirmed = confirm("Delete this work?");
+    if (!confirmed) return;
+    const res = await fetch(`/api/works/${id}`, {
+      method: "DELETE",
+    });
+    if (res.ok) {
+      fetchWorks();
+    }
+  }
+
+  function startEdit(work: Work) {
+    setEditId(work.id);
+    setTitle(work.title);
+    setDescription(work.description);
+  }
 
   return (
-    <Column gap="l" padding="xl" style={{ minHeight: "80vh" }}>
-      <Badge textVariant="display-strong-s">My Works </Badge>
-      <Heading variant="display-strong-l">{work.title}</Heading>
-      <Text variant="heading-default-l" onBackground="neutral-medium">
-        {work.description}
-      </Text>
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    <Column gap="l" padding="xl">
+      <Heading variant="display-strong-l">Works</Heading>
+
+      <Column gap="m" style={{ maxWidth: 400 }}>
+        <Input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title" id={""}        />
+        <Input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description" id={""}        />
+        {editId ? (
+          <Button onClick={handleUpdate}>Update</Button>
+        ) : (
+          <Button onClick={handleAdd}>Add New</Button>
+        )}
+      </Column>
+
+      <Column gap="s" style={{ marginTop: 20 }}>
+        {works.map((work) => (
+          <Row
+            key={work.id}
+            style={{
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid #ccc",
+              padding: "0.5rem 0",
+            }}
+          >
+            <Link href={`/works/${work.id}`} style={{ fontWeight: 600 }}>
+              {work.title}
+            </Link>
+            <div>
+              <Button
+                variant="tertiary"
+                onClick={() => startEdit(work)}
+                style={{ marginRight: 8 }}
+              >
+                Edit
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(work.id)}>
+                Delete
+              </Button>
+            </div>
+          </Row>
+        ))}
+      </Column>
     </Column>
   );
 }
