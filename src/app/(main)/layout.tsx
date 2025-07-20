@@ -6,16 +6,11 @@ import { Column } from "@once-ui-system/core";
 import config from "../resources/once-ui.config";
 const { fonts } = config;
 import React from "react";
-import {
-  ThemeProvider,
-  DataThemeProvider,
-  ToastProvider,
-  IconProvider,
-} from "@once-ui-system/core";
 import type { Metadata } from "next";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Besignz Portfolio",
@@ -82,25 +77,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body>
-        <ThemeProvider>
-          <DataThemeProvider>
-            <ToastProvider>
-              <IconProvider>
-                <Column
-                  fillWidth
-                  background="page"
-                  margin="0"
-                  padding="0"
-                  style={{ minHeight: "90vh" }}
-                >
-                  <Navbar />
-                  {children}
-                  <Footer />
-                </Column>
-              </IconProvider>
-            </ToastProvider>
-          </DataThemeProvider>
-        </ThemeProvider>
+        <Providers>
+          <Column
+            fillWidth
+            background="page"
+            margin="0"
+            padding="0"
+            style={{ minHeight: "90vh" }}
+          >
+            <Navbar />
+            {children}
+            <Footer />
+          </Column>
+        </Providers>
       </body>
     </html>
   );

@@ -2,31 +2,31 @@
 const baseURL = "https://demo.once-ui.com";
 
 // Import and set font for each variant
-import { Geist } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+import { Inter, Fira_Mono } from "next/font/google";
 
-const heading = Geist({
+const heading = Inter({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
 });
 
-const body = Geist({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
 
-const label = Geist({
+const label = Inter({
   variable: "--font-label",
   subsets: ["latin"],
   display: "swap",
 });
 
-const code = Geist_Mono({
+const code = Fira_Mono({
   variable: "--font-code",
   subsets: ["latin"],
   display: "swap",
+  weight: "400",
 });
 
 const fonts = {
@@ -60,7 +60,7 @@ const dataStyle = {
   tick: {
     fill: "var(--neutral-on-background-weak)",
     fontSize: 11,
-    line: false
+    line: false,
   },
 };
 

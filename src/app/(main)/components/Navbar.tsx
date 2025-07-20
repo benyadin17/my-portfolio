@@ -22,6 +22,7 @@ export default function Navbar() {
     { label: "Blog", href: "/blog" },
     { label: "About", href: "/not-found" },
     { label: "Contact", href: "/#contact" },
+    { label: "Redux Demo", href: "/redux-demo" }
   ];
 
   return (
