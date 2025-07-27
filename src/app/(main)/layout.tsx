@@ -4,13 +4,14 @@ import "@once-ui-system/core/css/tokens.css";
 import classNames from "classnames";
 import { Column } from "@once-ui-system/core";
 import config from "../resources/once-ui.config";
-const { fonts } = config;
 import React from "react";
 import type { Metadata } from "next";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Providers } from "@/components/Providers";
+
+const { fonts } = config;
 
 export const metadata: Metadata = {
   title: "Besignz Portfolio",

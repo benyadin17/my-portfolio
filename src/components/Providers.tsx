@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+import { SessionProvider } from "next-auth/react";
 import { Provider as ReduxProvider } from "react-redux";
 import { store } from "../store/index";
 
@@ -27,39 +28,41 @@ import { iconLibrary } from "../resources/icons";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <ReduxProvider store={store}>
-      <ThemeProvider
-        theme={style.theme as Theme}
-        brand={style.brand as Schemes}
-        accent={style.accent as Schemes}
-        neutral={style.neutral as NeutralColor}
-        solid={style.solid as SolidType}
-        solidStyle={style.solidStyle as SolidStyle}
-        border={style.border as BorderStyle}
-        surface={style.surface as SurfaceStyle}
-        transition={style.transition as TransitionStyle}
-        scaling={style.scaling as ScalingSize}
-      >
-        <DataThemeProvider
-          variant={dataStyle.variant as ChartVariant}
-          mode={dataStyle.mode as ChartMode}
-          height={dataStyle.height}
-          axis={{
-            stroke: dataStyle.axis.stroke,
-          }}
-          tick={{
-            fill: dataStyle.tick.fill,
-            fontSize: dataStyle.tick.fontSize,
-            line: dataStyle.tick.line,
-          }}
+    <SessionProvider>
+      <ReduxProvider store={store}>
+        <ThemeProvider
+          theme={style.theme as Theme}
+          brand={style.brand as Schemes}
+          accent={style.accent as Schemes}
+          neutral={style.neutral as NeutralColor}
+          solid={style.solid as SolidType}
+          solidStyle={style.solidStyle as SolidStyle}
+          border={style.border as BorderStyle}
+          surface={style.surface as SurfaceStyle}
+          transition={style.transition as TransitionStyle}
+          scaling={style.scaling as ScalingSize}
         >
-          <ToastProvider>
-            <IconProvider icons={iconLibrary}>
-              {children}
-            </IconProvider>
-          </ToastProvider>
-        </DataThemeProvider>
-      </ThemeProvider>
-    </ReduxProvider>
+          <DataThemeProvider
+            variant={dataStyle.variant as ChartVariant}
+            mode={dataStyle.mode as ChartMode}
+            height={dataStyle.height}
+            axis={{
+              stroke: dataStyle.axis.stroke,
+            }}
+            tick={{
+              fill: dataStyle.tick.fill,
+              fontSize: dataStyle.tick.fontSize,
+              line: dataStyle.tick.line,
+            }}
+          >
+            <ToastProvider>
+              <IconProvider icons={iconLibrary}>
+                {children}
+              </IconProvider>
+            </ToastProvider>
+          </DataThemeProvider>
+        </ThemeProvider>
+      </ReduxProvider>
+    </SessionProvider>
   );
 }

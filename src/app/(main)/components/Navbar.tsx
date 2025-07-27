@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { Row, Column, Button, Logo } from "@once-ui-system/core";
 import { HiMenu, HiX } from "react-icons/hi";
 
@@ -15,6 +16,7 @@ const works = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const menuItems = [
     { label: "Profile", href: "/profile" },
@@ -22,7 +24,7 @@ export default function Navbar() {
     { label: "Blog", href: "/blog" },
     { label: "About", href: "/not-found" },
     { label: "Contact", href: "/#contact" },
-    { label: "Redux Demo", href: "/redux-demo" }
+    { label: "Redux Demo", href: "/redux-demo" },
   ];
 
   return (
@@ -34,7 +36,7 @@ export default function Navbar() {
         backgroundColor: "rgba(255, 255, 255, 0.25)",
         border: "1px solid rgba(255, 255, 255, 0.3)",
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-        borderRadius: "16px",
+        borderRadius: 16,
         color: "black",
         position: "sticky",
         top: 20,
@@ -104,11 +106,27 @@ export default function Navbar() {
           })}
         </Row>
 
-        <Button
-          variant="tertiary"
-          style={{ borderRadius: "50%", padding: 0, width: 40, height: 40 }}
-          aria-label="User menu"
-        />
+        {session ? (
+          <Row align="center" gap="s" style={{ marginRight: 12 }}>
+            <span style={{ fontSize: 14 }}>{session.user?.email}</span>
+            <Button
+              variant="tertiary"
+              onClick={() => signOut({ callbackUrl: "/" })}
+              style={{ padding: "0.3rem 0.75rem", fontSize: 14, borderRadius: 6 }}
+            >
+              Sign out
+            </Button>
+          </Row>
+        ) : (
+          <Link href="/login">
+            <Button
+              variant="tertiary"
+              style={{ borderRadius: 6, padding: "0.3rem 0.75rem", fontSize: 14 }}
+            >
+              Login
+            </Button>
+          </Link>
+        )}
       </Row>
 
       {menuOpen && (
@@ -140,6 +158,37 @@ export default function Navbar() {
               </Link>
             );
           })}
+          {session ? (
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                signOut({ callbackUrl: "/" });
+              }}
+              style={{
+                padding: "0.75rem 1.5rem",
+                color: "white",
+                textAlign: "left",
+                background: "none",
+                border: "none",
+                fontWeight: 600,
+              }}
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setMenuOpen(false)}
+              style={{
+                padding: "0.75rem 1.5rem",
+                color: "white",
+                textDecoration: "none",
+                fontWeight: 600,
+              }}
+            >
+              Login
+            </Link>
+          )}
         </Column>
       )}
 
