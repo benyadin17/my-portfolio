@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { findUserByEmail } from "./userstore";
 import { AuthOptions, Session } from "next-auth";
 
-// Tambahan extend session (boleh juga ditaruh di global.d.ts)
 declare module "next-auth" {
   interface Session {
     user: {
@@ -26,8 +25,8 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const user = findUserByEmail(credentials.email);
-        if (!user) return null;
+        const user = await findUserByEmail(credentials.email);
+        if (!user || !user.password) return null;
 
         const isValid = await compare(credentials.password, user.password);
         if (!isValid) return null;
