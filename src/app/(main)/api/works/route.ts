@@ -1,21 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
-
-let works = [
-  // contoh awal
-  { id: "1", title: "Work 1", description: "Desc 1" },
-  { id: "2", title: "Work 2", description: "Desc 2" },
-];
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  return NextResponse.json(works);
+  try {
+    const works = await prisma.work.findMany();
+    return NextResponse.json(works);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch works" }, { status: 500 });
+  }
 }
 
-export async function POST(request: NextRequest) {
-  const { title, description } = await request.json();
-  if (!title || !description) return NextResponse.json({ message: "Missing data" }, { status: 400 });
+export async function POST(request: Request) {
+  try {
+    const { title, description } = await request.json();
 
-  const newWork = { id: Date.now().toString(), title, description };
-  works.push(newWork);
+    if (!title || !description) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
 
-  return NextResponse.json(newWork, { status: 201 });
+    const work = await prisma.work.create({
+      data: {
+        title,
+        description,
+      },
+    });
+
+    return NextResponse.json(work, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to create work" }, { status: 500 });
+  }
 }

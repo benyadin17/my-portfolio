@@ -19,6 +19,7 @@ export default function Navbar() {
   const { data: session } = useSession();
 
   const menuItems = [
+    { label: "Dashboard", href: "/dashboard" },
     { label: "Profile", href: "/profile" },
     { label: "Works", href: "/works/1" },
     { label: "Blog", href: "/blog" },
