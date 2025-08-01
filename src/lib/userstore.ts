@@ -1,14 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
-
-const prisma = new PrismaClient();
+import { prisma } from "./prisma";
+import bcrypt from "bcrypt";
 
 export async function findUserByEmail(email: string) {
   try {
-    const user = await prisma.user.findUnique({
+    return await prisma.user.findUnique({
       where: { email },
     });
-    return user;
   } catch (error) {
     console.error("findUserByEmail error:", error);
     return null;
