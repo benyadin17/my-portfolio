@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "biome-write": "npx @biomejs/biome format --write ."
+    "biome-write": "npx @biomejs/biome format --write .",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
