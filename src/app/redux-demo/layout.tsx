@@ -1,5 +1,4 @@
-"use client";
-
+// src/app/redux-demo/layout.tsx
 import "@once-ui-system/core/css/styles.css";
 import "@once-ui-system/core/css/tokens.css";
 
@@ -93,7 +92,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className="min-h-screen flex flex-col">
-        <Providers children={undefined} />
+        <Providers>{children}</Providers>
+
         <div
           style={{
             position: "fixed",
