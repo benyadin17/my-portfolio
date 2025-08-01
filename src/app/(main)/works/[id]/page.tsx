@@ -34,6 +34,11 @@ export default function WorksPage() {
     }
   }
 
+  function startEdit(work: Work) {
+    // Redirect to the edit page for the selected work
+    window.location.href = `/works/${work.id}/edit`;
+  }
+
   return (
     <Column gap="l" padding="xl">
       <Heading variant="display-strong-l">Works</Heading>
@@ -53,12 +58,14 @@ export default function WorksPage() {
               {work.title}
             </Link>
             <div>
-              {/* Tombol Edit mengarah ke halaman edit */}
-              <Link href={`/works/${work.id}/edit`}>
-                <Button variant="tertiary" style={{ marginRight: 8 }}>
-                  Edit
-                </Button>
-              </Link>
+            <Button
+              variant="tertiary"
+              onClick={() => startEdit(work)}
+              style={{ marginRight: 8 }}
+            >
+              Edit
+            </Button>
+
 
               <Button variant="danger" onClick={() => handleDelete(work.id)}>
                 Delete

@@ -1,72 +1,74 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Column, Heading, Text, Row, Badge } from "@once-ui-system/core";
+import { useRouter } from "next/navigation";
+import { Column, Heading, Row, Button } from "@once-ui-system/core";
 
-const blogPosts = [
-  {
-    id: "1",
-    title: "Proses Desain Redesign Website XYZ: Studi Kasus Lengkap",
-    summary: "Pelajari bagaimana saya melakukan redesign website mulai dari riset sampai hasil akhir.",
-    date: "2025-07-01",
-  },
-  {
-    id: "2",
-    title: "5 Tren Warna dan Tipografi untuk Desain Web Tahun 2025",
-    summary: "Insight tren terbaru yang bisa kamu aplikasikan di project desainmu.",
-    date: "2025-06-15",
-  },
-  {
-    id: "3",
-    title: "Cara Membuat User Persona yang Efektif untuk Project UX",
-    summary: "Panduan langkah demi langkah membuat user persona agar desainmu tepat sasaran.",
-    date: "2025-06-05",
-  },
-];
+type BlogPost = {
+  id: string;
+  title: string;
+  summary: string;
+  date: string;
+};
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const router = useRouter();
+
+  async function fetchPosts() {
+    const res = await fetch("/api/blog");
+    const data = await res.json();
+    setPosts(data);
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  async function handleDelete(id: string) {
+    if (!confirm("Delete this post?")) return;
+    const res = await fetch(`/api/blog/${id}`, { method: "DELETE" });
+    if (res.ok) fetchPosts();
+  }
+
+  function startEdit(post: BlogPost) {
+    router.push(`/blog/${post.id}/edit`);
+  }
+
   return (
-    <Column gap="l" padding="xl" style={{ minHeight: "80vh" }}>
-      <Heading variant="display-strong-l" marginBottom="l">
-        Blog
-      </Heading>
+    <Column gap="l" padding="xl">
+      <Heading variant="display-strong-l">Blog</Heading>
 
-      {blogPosts.map((post) => (
-        <Link key={post.id} href={`/blog/${post.id}`} style={{ textDecoration: "none" }}>
+      <Column gap="s" style={{ marginTop: 20 }}>
+        {posts.map((post) => (
           <Row
-            as="a"
-            gap="m"
+            key={post.id}
             style={{
-              padding: "1rem",
-              borderRadius: 8,
-              border: "1px solid #ddd",
-              marginBottom: "1rem",
-              cursor: "pointer",
-              transition: "background-color 0.15s",
-              color: "inherit",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid #ccc",
+              padding: "0.5rem 0",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f9f9f9")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
           >
-            <Column gap="xs" style={{ flex: 1 }}>
-              <Heading variant="heading-default-l">{post.title}</Heading>
-              <Text variant="body-default-s" onBackground="neutral-medium">
-                {post.summary}
-              </Text>
-            </Column>
-
-            <Badge
-              style={{
-                alignSelf: "flex-start",
-                padding: "0.25rem 0.5rem",
-                fontWeight: "500",
-              }}
-            >
-              {new Date(post.date).toLocaleDateString()}
-            </Badge>
+            <Link href={`/blog/${post.id}`} style={{ fontWeight: 600 }}>
+              {post.title}
+            </Link>
+            <div>
+              <Button
+                variant="tertiary"
+                onClick={() => startEdit(post)}
+                style={{ marginRight: 8 }}
+              >
+                Edit
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(post.id)}>
+                Delete
+              </Button>
+            </div>
           </Row>
-        </Link>
-      ))}
+        ))}
+      </Column>
     </Column>
   );
 }
