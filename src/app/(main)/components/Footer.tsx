@@ -9,150 +9,94 @@ export default function Footer() {
     <Column
       as="footer"
       padding="m"
-      style={{
-        backgroundColor: "#f5f5f5",
-        textAlign: "center",
-        alignItems: "center",
-      }}
+      className="bg-gray-100 text-center items-center"
     >
       <Row
         gap="m"
-        style={{ justifyContent: "center", marginBottom: 16 }}
+        className="justify-center flex-wrap mb-4 gap-x-4"
       >
-        {/* Twitter */}
-        <Link
+        <SocialIcon
           href="https://x.com/besignz"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: "none" }}
+          label="Twitter"
+          color="#1DA1F2"
         >
-          <Button
-            size="s"
-            aria-label="Twitter"
-            style={{
-              backgroundColor: "#1DA1F2",
-              color: "white",
-              borderRadius: "50%",
-              width: 40,
-              height: 40,
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FaTwitter size={20} />
-          </Button>
-        </Link>
+          <FaTwitter size={20} />
+        </SocialIcon>
 
-        {/* Instagram */}
-        <Link
+        <SocialIcon
           href="https://instagram.com/sketchwithme_b"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: "none" }}
+          label="Instagram"
+          color="#E4405F"
         >
-          <Button
-            size="s"
-            aria-label="Instagram"
-            style={{
-              backgroundColor: "#E4405F",
-              color: "white",
-              borderRadius: "50%",
-              width: 40,
-              height: 40,
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FaInstagram size={20} />
-          </Button>
-        </Link>
+          <FaInstagram size={20} />
+        </SocialIcon>
 
-        {/* LinkedIn */}
-        <Link
+        <SocialIcon
           href="https://id.linkedin.com/in/beny-adi-nugraha-8879a11a3"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: "none" }}
+          label="LinkedIn"
+          color="#0077B5"
         >
-          <Button
-            size="s"
-            aria-label="LinkedIn"
-            style={{
-              backgroundColor: "#0077B5",
-              color: "white",
-              borderRadius: "50%",
-              width: 40,
-              height: 40,
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FaLinkedin size={20} />
-          </Button>
-        </Link>
+          <FaLinkedin size={20} />
+        </SocialIcon>
 
-        {/* GitHub */}
-        <Link
+        <SocialIcon
           href="https://github.com/benyadin17"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: "none" }}
+          label="GitHub"
+          color="#333"
         >
-          <Button
-            size="s"
-            aria-label="GitHub"
-            style={{
-              backgroundColor: "#333",
-              color: "white",
-              borderRadius: "50%",
-              width: 40,
-              height: 40,
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FaGithub size={20} />
-          </Button>
-        </Link>
+          <FaGithub size={20} />
+        </SocialIcon>
       </Row>
 
-      <Row
-        gap="s"
-        wrap
-        style={{ justifyContent: "center", marginTop: 16 }}
-      >
+      <Row gap="s" wrap className="justify-center mt-4 flex-wrap text-sm">
         <Text size="m">© 2025 Besignz. All rights reserved.</Text>
-        <Link
-          href="/privacy-policy"
-          style={{
-            textDecoration: "underline",
-            cursor: "pointer",
-            color: "inherit",
-            marginLeft: 16,
-          }}
-        >
+        <Link href="/privacy-policy" className="underline ml-4 text-inherit">
           Privacy Policy
         </Link>
-        <Link
-          href="/terms"
-          style={{
-            textDecoration: "underline",
-            cursor: "pointer",
-            color: "inherit",
-            marginLeft: 16,
-          }}
-        >
+        <Link href="/terms" className="underline ml-4 text-inherit">
           Terms of Service
         </Link>
       </Row>
     </Column>
   );
 }
+
+function SocialIcon({
+  href,
+  label,
+  color,
+  children,
+}: {
+  href: string;
+  label: string;
+  color: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="no-underline"
+    >
+      <Button
+        size="s"
+        aria-label={label}
+        style={{
+          backgroundColor: color,
+          color: "white",
+          borderRadius: "50%",
+          width: 40,
+          height: 40,
+          padding: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {children}
+      </Button>
+    </Link>
+  );
+}
+export { Footer };
