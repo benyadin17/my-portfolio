@@ -108,16 +108,34 @@ export default function Navbar() {
         </Row>
 
         {session ? (
-          <Row align="center" gap="s" style={{ marginRight: 12 }}>
-            <span style={{ fontSize: 14 }}>{session.user?.email}</span>
-            <Button
-              variant="tertiary"
-              onClick={() => signOut({ callbackUrl: "/" })}
-              style={{ padding: "0.3rem 0.75rem", fontSize: 14, borderRadius: 6 }}
-            >
-              Sign out
-            </Button>
-          </Row>
+          <Row align="center" gap="s" style={{ marginTop: 12, marginRight: 12 }}>
+  <div
+    style={{
+      width: 32,
+      height: 32,
+      borderRadius: "50%",
+      backgroundColor: "#2563eb",
+      color: "white",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: "bold",
+      textTransform: "uppercase",
+      fontSize: 14,
+    }}
+    title={session.user?.name || ""}
+  >
+    {session.user?.name?.charAt(0) || "U"}
+  </div>
+  <Button
+    variant="tertiary"
+    onClick={() => signOut({ callbackUrl: "/" })}
+    style={{ padding: "0.3rem 0.75rem", fontSize: 14, borderRadius: 6 }}
+  >
+    Sign out
+  </Button>
+</Row>
+
         ) : (
           <Link href="/login">
             <Button

@@ -96,36 +96,40 @@ export default function DashboardPage() {
     <Row style={{ minHeight: "100vh", backgroundColor: "#fff" }}>
       {/* Sidebar kiri */}
       <Column
-        style={{
-          width: 220,
-          padding: "1.5rem 1rem",
-          backgroundColor: "#fff", // Sama dengan konten kanan
-          borderRight: "1px solid #e5e7eb", // optional border tipis biar ada pemisah halus
-          color: "#111827", // teks lebih gelap untuk kontras
-          fontWeight: "600",
-          gap: "1rem",
-        }}
-      >
-        <Text size="m" style={{ marginBottom: "1.5rem" }}>
-          {session?.user?.name || "User"}
-        </Text>
+  style={{
+    width: 220,
+    padding: "1.5rem 1rem",
+    backgroundColor: "#fff",
+    borderRight: "1px solid #ecececff",
+    color: "#111827",
+    fontWeight: "600",
+    gap: "1rem",
+  }}
+>
+  <Text size="m" style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+    {session?.user?.name || "User"}
+  </Text>
 
-        <Button
-          variant={activeMenu === "works" ? "primary" : "secondary"}
-          style={{ justifyContent: "flex-start" }}
-          onClick={() => setActiveMenu("works")}
-        >
-          Works
-        </Button>
-
-        <Button
-          variant={activeMenu === "blogs" ? "primary" : "secondary"}
-          style={{ justifyContent: "flex-start" }}
-          onClick={() => setActiveMenu("blogs")}
-        >
-          Blogs
-        </Button>
-      </Column>
+  {[
+    { label: "Works", value: "works" },
+    { label: "Blogs", value: "blogs" },
+  ].map((item) => (
+    <div
+      key={item.value}
+      onClick={() => setActiveMenu(item.value as Menu)}
+      style={{
+        padding: "0.75rem 1rem",
+        borderRadius: 6,
+        backgroundColor: activeMenu === item.value ? "#E0E7FF" : "transparent", // warna biru muda kalau aktif
+        color: activeMenu === item.value ? "#1D4ED8" : "#374151", // warna teks aktif & normal
+        cursor: "pointer",
+        transition: "background-color 0.2s ease",
+      }}
+    >
+      {item.label}
+    </div>
+  ))}
+</Column>
 
       {/* Content kanan */}
       <Column
