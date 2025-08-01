@@ -1,4 +1,4 @@
-import { compare } from "bcrypt";
+import { compare } from "bcryptjs";  // Ganti 'bcrypt' jadi 'bcryptjs'
 import CredentialsProvider from "next-auth/providers/credentials";
 import { findUserByEmail } from "./userstore";
 import { AuthOptions, Session } from "next-auth";
