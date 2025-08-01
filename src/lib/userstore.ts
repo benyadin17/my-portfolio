@@ -1,26 +1,27 @@
 // lib/userstore.ts
-import { hash } from "bcrypt";
-import { prisma } from "../lib/prisma";
+import { supabase } from './supabaseClient'; // your initialized client
+import bcrypt from 'bcrypt';
 
 export async function findUserByEmail(email: string) {
-  return await prisma.user.findUnique({
-    where: { email },
-  });
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  if (error) return null;
+  return data;
 }
 
 export async function createUser(name: string, email: string, password: string) {
-  const existingUser = await findUserByEmail(email);
-  if (existingUser) return null;
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  const hashedPassword = await hash(password, 10);
+  const { data, error } = await supabase
+    .from('users')
+    .insert([{ name, email, password: hashedPassword }])
+    .select()
+    .single();
 
-  const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
-  });
-
-  return user;
+  if (error) return null;
+  return data;
 }
