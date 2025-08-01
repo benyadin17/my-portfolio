@@ -6,6 +6,10 @@ function isValidEmail(email: string): boolean {
   return /\S+@\S+\.\S+/.test(email);
 }
 
+export async function GET() {
+  return NextResponse.json({ message: "Register endpoint. Use POST to register." });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
