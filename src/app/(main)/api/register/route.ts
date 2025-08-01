@@ -1,4 +1,4 @@
-// app/api/register/route.ts
+"use client";
 
 import { NextRequest, NextResponse } from "next/server";
 import { createUser, findUserByEmail } from "@/lib/userstore";
