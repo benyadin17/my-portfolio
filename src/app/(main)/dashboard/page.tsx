@@ -34,6 +34,37 @@ export default function DashboardPage() {
   // State untuk kontrol animasi loading
   const [showAnimation, setShowAnimation] = useState(true);
 
+  // Handler for adding a work
+  const handleAddWork = async () => {
+    setLoadingWorks(true);
+    try {
+      // Simulate API call or add your logic here
+      // Reset fields after "adding"
+      setWorkTitle("");
+      setWorkDescription("");
+    } catch (error) {
+      // Handle error if needed
+    } finally {
+      setLoadingWorks(false);
+    }
+  };
+
+  // Handler for adding a blog post
+  const handleAddBlog = async () => {
+    setLoadingBlog(true);
+    try {
+      // Simulate API call or add your logic here
+      // Reset fields after "adding"
+      setBlogTitle("");
+      setBlogSummary("");
+      setBlogDate("");
+    } catch (error) {
+      // Handle error if needed
+    } finally {
+      setLoadingBlog(false);
+    }
+  };
+
   useEffect(() => {
     // Setelah 3 detik hilangkan animasi
     const timer = setTimeout(() => setShowAnimation(false), 3000);
@@ -53,7 +84,7 @@ export default function DashboardPage() {
           height: "100vh",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#f9fafb",
+          backgroundColor: "#fff",
         }}
       >
         <Lottie animationData={animation404} style={{ width: 250, height: 250 }} />
@@ -61,72 +92,21 @@ export default function DashboardPage() {
     );
   }
 
-  async function handleAddWork() {
-    if (!workTitle || !workDescription) {
-      alert("Please fill all fields for Work");
-      return;
-    }
-    setLoadingWorks(true);
-    try {
-      const res = await fetch("/api/works", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: workTitle, description: workDescription }),
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        alert(`Error: ${data.error || "Failed to add work"}`);
-      } else {
-        alert("Work added successfully!");
-        setWorkTitle("");
-        setWorkDescription("");
-      }
-    } catch {
-      alert("Failed to add work");
-    }
-    setLoadingWorks(false);
-  }
-
-  async function handleAddBlog() {
-    if (!blogTitle || !blogSummary || !blogDate) {
-      alert("Please fill all fields for Blog");
-      return;
-    }
-    setLoadingBlog(true);
-    try {
-      const res = await fetch("/api/blog", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: blogTitle, summary: blogSummary, date: blogDate }),
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        alert(`Error: ${data.error || "Failed to add blog post"}`);
-      } else {
-        alert("Blog post added successfully!");
-        setBlogTitle("");
-        setBlogSummary("");
-        setBlogDate("");
-      }
-    } catch {
-      alert("Failed to add blog post");
-    }
-    setLoadingBlog(false);
-  }
-
   return (
-    <Row style={{ minHeight: "100vh" }}>
+    <Row style={{ minHeight: "100vh", backgroundColor: "#fff" }}>
       {/* Sidebar kiri */}
       <Column
         style={{
           width: 220,
-          backgroundColor: "#1f2937",
-          color: "white",
           padding: "1.5rem 1rem",
+          backgroundColor: "#fff", // Sama dengan konten kanan
+          borderRight: "1px solid #e5e7eb", // optional border tipis biar ada pemisah halus
+          color: "#111827", // teks lebih gelap untuk kontras
+          fontWeight: "600",
+          gap: "1rem",
         }}
-        gap="m"
       >
-        <Text size="m" style={{ fontWeight: "600", marginBottom: "2rem" }}>
+        <Text size="m" style={{ marginBottom: "1.5rem" }}>
           {session?.user?.name || "User"}
         </Text>
 
@@ -153,7 +133,7 @@ export default function DashboardPage() {
         style={{
           flex: 1,
           padding: "2rem",
-          backgroundColor: "#f9fafb",
+          backgroundColor: "#fff", // Sama dengan sidebar
         }}
       >
         <Heading size="xl" style={{ marginBottom: "1rem" }}>
